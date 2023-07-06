@@ -9,18 +9,23 @@ public class PlayerController : MonoBehaviour
     public float gravitiyModifire;
     public bool isOnGround = true;
     public bool gameOver;
+    private Animator playerAnim;
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravitiyModifire;
+        playerAnim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)&&isOnGround){
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
+        {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
+            playerAnim.SetTrigger("Jump_trig");
+
         }
     }
     void OnCollisionEnter(Collision collision)
@@ -33,6 +38,8 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             gameOver = true;
+            playerAnim.SetBool("Death_b", true);
+            playerAnim.SetInteger("DeathType_int", 1);
         }
     }
 }

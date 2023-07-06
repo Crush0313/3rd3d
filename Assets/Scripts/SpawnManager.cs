@@ -9,6 +9,7 @@ public class SpawnManager : MonoBehaviour
     public float startDelay = 2;
     public float repeatRate = 2;
     PlayerController playerControllerScript;
+
     // Start is called before the first frame update
     void Start()
     {
